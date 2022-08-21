@@ -1,8 +1,10 @@
-package com.leetcode.String;
+package com.leetcode.String.reverse;
 
 public class ReverseString {
 
     /*
+    * https://leetcode.com/problems/reverse-string/
+    *
     * 字符串类型题目的基础：反转字符串
     * https://wizardforcel.gitbooks.io/the-art-of-programming-by-july/content/01.01.html
     * 上文有两个重要知识点：
