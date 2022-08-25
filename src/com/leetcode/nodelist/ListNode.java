@@ -30,6 +30,13 @@ public class ListNode {
         return head;
     }
 
+    public static void printListNode(ListNode listNode) {
+        while (listNode != null) {
+            System.out.print(listNode.val + ", ");
+            listNode = listNode.next;
+        }
+    }
+
     public static void main(String[] args) {
         int[] arr = {1,2,3,4,5};
         ListNode listNode = makeListNode(arr);
