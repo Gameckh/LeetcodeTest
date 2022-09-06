@@ -14,7 +14,9 @@ public class BinaryTreePostorderTraversal {
     *   postorder: res.add(root.val); 在递归之后
     * */
     public static void main(String[] args) {
-
+        Integer[] root = {1,null,2,3};
+        TreeNode node = TreeNode.createTree(root);
+        TreeNode.postOrderTraverse(node);
     }
 
     public static List<Integer> postorderTraversal(TreeNode root) {

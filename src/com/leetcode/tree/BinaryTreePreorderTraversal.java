@@ -16,7 +16,7 @@ public class BinaryTreePreorderTraversal {
     * */
     public static void main(String[] args) {
         Integer[] root = {1,null,2,3};
-        TreeNode node = TreeNode.generateTree(root, 0);
+        TreeNode node = TreeNode.createTree(root);
         System.out.println(preorderTraversal(node));
     }
 

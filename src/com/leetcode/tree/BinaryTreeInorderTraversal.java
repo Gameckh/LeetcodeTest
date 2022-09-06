@@ -12,7 +12,9 @@ public class BinaryTreeInorderTraversal {
     *   与preorder类似，把add val放到中间即可。
     * */
     public static void main(String[] args) {
-
+        Integer[] root = {1,null,2,3};
+        TreeNode node = TreeNode.createTree(root);
+        TreeNode.inOderTraverse(node);
     }
 
     public List<Integer> inorderTraversal(TreeNode root) {
