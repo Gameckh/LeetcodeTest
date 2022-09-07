@@ -1,6 +1,8 @@
 package com.leetcode.tree;
 
 import java.util.ArrayDeque;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class TreeNode {
     int val;
@@ -78,13 +80,14 @@ public class TreeNode {
     public static void main(String[] args) {
         Integer[] root = new Integer[]{1, null, 2, 3};
         TreeNode treeNode = createTree(root);
-        preOrderTraverse(treeNode);
+//        preOrderTraverse(treeNode);
+        breathFirstSearch(treeNode);
     }
 
     // 先序深度优先遍历 -> 中、左、右
     public static void preOrderTraverse(TreeNode root) {
         if (root != null) {
-            System.out.println(root.val);
+            System.out.print(root.val + ",");
             preOrderTraverse(root.left);
             preOrderTraverse(root.right);
         }
@@ -103,6 +106,24 @@ public class TreeNode {
             postOrderTraverse(root.left);
             postOrderTraverse(root.right);
             System.out.println(root.val);
+        }
+    }
+
+    public static void breathFirstSearch(TreeNode root) {
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(root);
+        while (!q.isEmpty()) {
+            int count = q.size();
+            for (int i = 0; i < count; i++) {
+                TreeNode node = q.poll();
+                System.out.println(node.val);
+                if (node.left != null) {
+                    q.add(node.left);
+                }
+                if (node.right != null) {
+                    q.add(node.right);
+                }
+            }
         }
     }
 
