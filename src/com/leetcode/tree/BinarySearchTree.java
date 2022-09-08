@@ -126,6 +126,71 @@ public class BinarySearchTree {
         return node.val;
     }
 
+    /*
+    * 寻找要删除节点的中序后继节点
+    * 首先我们引入后继节点的概念，如果将一棵二叉树按照【中序周游】的方式输出，则任一节点的下一个节点就是该节点的后继节点。
+    *   之所以强调【中序遍历】，原因在于二叉搜索树一个很重要的特性就是：树中任何结点的左子树中所有结点的值均比该结点小，
+    *   右子树中所有结点的值均比该结点大。对二叉搜索树进行中序遍历即得到一个递增排序的序列。
+    *   参考：https://www.cnblogs.com/shuaihanhungry/p/5734577.html
+    * 分为两种情况：
+    *   1.后继节点为待删除节点的右子，只需要将curren用successor替换即可，注意处理好current.left和successor.right.
+    *   2.后继节点为待删除结点的右子节点的左子树
+    *       算法的步骤是：
+    *           successorParent.left=successor.right
+    *           successor.left=current.left
+    *           parent.left=successor
+    * */
+    private Node getSuccessor(Node delNode) {
+        Node successorParent = delNode;
+        Node successor = delNode;
+        Node current = delNode.right;
 
+        while (current != null) {
+            successorParent = successor;
+            successor = current;
+            current = current.left;
+        }
+
+        // 判断：如果后继节点为delNode.right的左子节点
+        // 1.
+        if (successor != delNode.right) {
+            successorParent.left = successor.right;
+            successor.right = delNode.right;
+        }
+        return successor;
+    }
+
+    public boolean delete(int key) {
+        Node current = root;
+        Node parent = new Node();
+        boolean isRightChild = true;
+        while (current.val != key) {
+            parent = current;
+            if (key > current.val) {
+                current = current.right;
+                isRightChild = true;
+            } else {
+                current = current.left;
+                isRightChild = false;
+            }
+            // 没找到key对应的node
+            if (current == null) return false;
+        }
+        // 出了循环，current就是要删除的节点了
+        // 判断1：当要删除的节点没有子节点(叶子节点)
+        if (current.right == null && current.left == null) {
+            if (current == root) {
+                root = null;
+            } else {
+                if (isRightChild) {
+                    parent.right = null;
+                } else {
+                    parent.left = null;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
 
 }
