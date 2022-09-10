@@ -96,7 +96,7 @@ public class TreeNode {
     public static void inOderTraverse(TreeNode root) {
         if (root != null) {
             inOderTraverse(root.left);
-            System.out.println(root.val);
+            System.out.print(root.val + ", ");
             inOderTraverse(root.right);
         }
     }

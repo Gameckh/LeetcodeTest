@@ -6,7 +6,7 @@ package com.leetcode.tree;
 *   Java 版本参考：https://www.cnblogs.com/yahuian/p/java-binary-search-tree.html
 *
 * */
-public class BinarySearchTree {
+public class BinarySearchTreeStruct {
 
     private class Node {
         int val;
@@ -16,7 +16,7 @@ public class BinarySearchTree {
 
     private Node root;
 
-    public BinarySearchTree() {
+    public BinarySearchTreeStruct() {
 
     }
 
@@ -133,7 +133,7 @@ public class BinarySearchTree {
     *   右子树中所有结点的值均比该结点大。对二叉搜索树进行中序遍历即得到一个递增排序的序列。
     *   参考：https://www.cnblogs.com/shuaihanhungry/p/5734577.html
     * 分为两种情况：
-    *   1.后继节点为待删除节点的右子，只需要将curren用successor替换即可，注意处理好current.left和successor.right.
+    *   1.后继节点为待删除节点的右子节点，只需要将curren用successor替换即可，注意处理好current.left和successor.right.
     *   2.后继节点为待删除结点的右子节点的左子树
     *       算法的步骤是：
     *           successorParent.left=successor.right
@@ -152,7 +152,8 @@ public class BinarySearchTree {
         }
 
         // 判断：如果后继节点为delNode.right的左子节点
-        // 1.
+        // 1. successor的右子节点，移动到successorParent的左子节点上
+        // 2. successor的右子节点，拿到删除节点的右子节点
         if (successor != delNode.right) {
             successorParent.left = successor.right;
             successor.right = delNode.right;
@@ -190,7 +191,37 @@ public class BinarySearchTree {
             }
             return true;
         }
-        return false;
+        // 判断2：要删除的节点有一个子节点
+        else if (current.left == null) {
+            if (current == root)
+                root = current.right;
+            else if (isRightChild)
+                parent.right = current.right;
+            else
+                parent.left = current.right;
+            return true;
+        } else if (current.right == null) {
+            if (current == root)
+                root = current.right;
+            else if (isRightChild)
+                parent.right = current.left;
+            else
+                parent.left = current.left;
+            return true;
+        }
+        // 判断3：要删除的节点有两个子节点
+        else {
+            Node successor = getSuccessor(current);
+            if (current == root)
+                root = successor;
+            else if (isRightChild)
+                parent.right = successor;
+            else
+                parent.left = successor;
+
+            successor.left = current.left;
+            return true;
+        }
     }
 
 }
