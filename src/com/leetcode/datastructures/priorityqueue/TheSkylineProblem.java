@@ -29,27 +29,40 @@ public class TheSkylineProblem {
 
     public static List<List<Integer>> getSkyline_2(int[][] buildings) {
         // 建筑个数，边缘个数
-        int n = buildings.length, m = n << 1; // 左移操作，相当于除以2，但只适用于正数，参考：https://www.jianshu.com/p/19ed5ff6a945
-        List<List<Integer>> ans = new ArrayList<List<Integer>>();//输出答案
+        // 左移操作，相当于乘以2，但只适用于正数，参考：https://www.jianshu.com/p/19ed5ff6a945
+        int n = buildings.length, m = n << 1;
+        List<List<Integer>> ans = new ArrayList<>();
 
-        int[] boundaries = new int[m];//边缘位置
+        // 边缘位置
+        int[] boundaries = new int[m];
         for (int i = 0; i < n; i++) {
+            // 左边横坐标 left
             boundaries[i << 1] = buildings[i][0];
+            // 右边横坐标 right
             boundaries[(i << 1) + 1] = buildings[i][1];
         }
-        Arrays.sort(boundaries);//将建筑的边缘位置按坐标从小到大排序
+        // 将建筑的边缘位置按坐标从小到大排序
+        Arrays.sort(boundaries);
 
-        PriorityQueue<int[]> pq = new PriorityQueue<int[]>((a, b) -> b[1] - a[1]);//优先队列，a[0]为建筑右边界，a[1]为建筑高度，按高度从大到小排序
-        int building = 0;//已入队建筑数量
-        for (int i = 0; i < m; i++) {//遍历各个建筑边缘的位置
-            if (i > 0 && boundaries[i - 1] == boundaries[i])//直接跳过重复的边缘位置
+        // 优先队列，a[0]为建筑右边界，a[1]为建筑高度，按高度从大到小排序
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> b[1] - a[1]);
+        // 已入队建筑数量
+        int building = 0;
+        // 遍历各个建筑边缘的位置
+        for (int i = 0; i < m; i++) {
+            // 直接跳过重叠的边缘位置
+            if (i > 0 && boundaries[i - 1] == boundaries[i])
                 continue;
-            while (building < n && buildings[building][0] <= boundaries[i])//建筑已按左边缘排序，因此可将左边缘位于当前位置左侧的建筑依次入队
+            // 建筑已按左边缘排序，因此可将左边缘位于当前位置左侧的建筑依次入队
+            while (building < n && buildings[building][0] <= boundaries[i])
                 pq.offer(new int[]{buildings[building][1], buildings[building++][2]});
-            while (!pq.isEmpty() && pq.peek()[0] <= boundaries[i])//延迟删除队首范围已超出当前边缘位置的建筑
+            // 删除队首，右边界范围已超出当前边缘位置的建筑
+            while (!pq.isEmpty() && pq.peek()[0] <= boundaries[i])
                 pq.poll();
-            int height = (pq.isEmpty()) ? 0 : pq.peek()[1];//空队列对应当前位置天际线高度为0
-            if (ans.size() == 0 || height != ans.get(ans.size() - 1).get(1))//筛除连续相同高度的水平线
+            // 空队列对应当前位置天际线高度为0
+            int height = (pq.isEmpty()) ? 0 : pq.peek()[1];
+            // 筛除连续相同高度的水平线
+            if (ans.size() == 0 || height != ans.get(ans.size() - 1).get(1))
                 ans.add(Arrays.asList(boundaries[i], height));
         }
 
@@ -86,28 +99,4 @@ public class TheSkylineProblem {
         return result;
     }
 
-}
-
-class Pair<K, T>{
-    K key;
-    T value;
-
-    public Pair() {}
-    public Pair(K key, T value){
-        this.key = key;
-        this.value = value;
-    }
-
-    public void set(K key, T value){
-        this.key = key;
-        this.value = value;
-    }
-
-    public K getKey() {
-        return key;
-    }
-
-    public T getValue() {
-        return value;
-    }
 }
