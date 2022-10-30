@@ -1,4 +1,4 @@
-package com.training.sorts;
+package com.training.sorts.basic;
 
 import java.util.Arrays;
 
