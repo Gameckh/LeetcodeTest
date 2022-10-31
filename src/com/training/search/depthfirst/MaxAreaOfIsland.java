@@ -1,4 +1,4 @@
-package com.training.search;
+package com.training.search.depthfirst;
 
 public class MaxAreaOfIsland {
 
