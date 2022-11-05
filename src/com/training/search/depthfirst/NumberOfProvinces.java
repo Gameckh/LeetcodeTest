@@ -26,17 +26,25 @@ public class NumberOfProvinces {
         int count = 0;
         for (int i = 0; i < n; i++) {
             if (!checked[i]) {
+                // Key step:
+                // The depth-first search recursive function will check and mark all connected elements in one recursion.
                 dfs(isConnected, i, checked);
+                // When the dfs recursion out, means that all the connected position have been marked.
                 count++;
             }
         }
         return count;
     }
     
-    private static void dfs( int[][] isConnected, int i, boolean[] checked ) {
-        checked[i] = true;
+    private static void dfs( int[][] isConnected, int row, boolean[] checked ) {
+        checked[row] = true;
+        // Notice here:
+        // This loop check the isConnected matrix by columns
+        // And checked array used the feature of "double connection"
+        // which means if two provinces connect, they will connect on row and column simultaneously.
+        // So the checked array actually means the connection, not the elements.
         for (int j = 0; j < isConnected.length; j++) {
-            if (isConnected[i][j] == 1 && !checked[j]) {
+            if (isConnected[row][j] == 1 && !checked[j]) {
                 dfs(isConnected, j, checked);
             }
         }

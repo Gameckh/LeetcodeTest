@@ -7,6 +7,16 @@ public class Permutations {
 
     /*
     * https://leetcode.com/problems/permutations/
+    *
+    * The template of the backtracking algorithm:
+    * 1. Declare a backtracking function as a recursive logic block.
+    * 2. The conditions to stop the recursion (the if statement, often is the edge of the given array).
+    *       In the if block, add the current result to the result collection.
+    *       Return to stop current recursion.
+    * 3. Use for loop to traverse all elements of the given array
+    *       Change the elements of the given array to satisfy the problem.
+    *       Backtracking into the deeper level.
+    *       Recover the given array.
     * */
     public static void main(String[] args) {
 

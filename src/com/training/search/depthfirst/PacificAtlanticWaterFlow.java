@@ -54,6 +54,8 @@ public class PacificAtlanticWaterFlow {
     private static final int[] directions = {-1,0,1,0,-1};
     private static void dfs(int[][] heights, int r, int c, boolean[][] canReach) {
         if (canReach[r][c]) return;
+        // the cell r,c can reach itself of course.
+        // and this also means we checked this cell.
         canReach[r][c] = true;
         int x, y;
         int rLen = heights.length, cLen = heights[0].length;
